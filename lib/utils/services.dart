@@ -5,18 +5,9 @@ import 'package:http/http.dart';
 import 'package:mytube/models/channel_info.dart';
 import 'package:mytube/utils/constants.dart';
 
+import '../models/video_model.dart';
+
 class Services{
-
-  static const String ChannelId = 'UCIV86P2bEtB7PIwr69o4Cpw';
-  static const String BaseUrl = 'youtube.googleapis.com';
-
-  /*
-  curl \
-  'https://youtube.googleapis.com/youtube/v3/channels?part=snippet&part=contentDetails&id=UCIV86P2bEtB7PIwr69o4Cpw&access_token=AIzaSyBmdki8OtORESM3uta0Ig7qV-DpzoCi774&key=[YOUR_API_KEY]' \
-  --header 'Authorization: Bearer [YOUR_ACCESS_TOKEN]' \
-  --header 'Accept: application/json' \
-  --compressed
-   */
 
   static Future<ChannelInfo>getChannelInfo()async{
     Map<String,String> parameters={
@@ -38,5 +29,30 @@ class Services{
     var json=jsonDecode(response.body);
     ChannelInfo channelInfo = ChannelInfo.fromJson(json);
     return channelInfo;
+  }
+
+
+  static Future<VideosModel>getVideosList({required String playlistId})async{
+    Map<String,String> parameters={
+      'part':'snippet',
+      'playlistId':playlistId,
+      'access_token':APIKEY,
+      'key':APIKEY,
+    };
+
+    Map<String,String>headers={
+      HttpHeaders.contentTypeHeader:'application/json'
+    };
+
+    Uri uri = Uri.https(
+        BaseUrl,
+        '/youtube/v3/playlistItems',
+        parameters
+    );
+    Response response = await http.get(uri,headers: headers);
+    var json=jsonDecode(response.body);
+    VideosModel videosModel = VideosModel.fromJson(json);
+    print(videosModel.videos.length);
+    return videosModel;
   }
 }

@@ -17,11 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: HomeScreen.routeName,
-      routes: {
-        HomeScreen.routeName:(context)=>HomeScreen(),
-        PlayerScreen.routeName:(context)=>PlayerScreen(),
-      },
+      home: HomeScreen(),
     );
   }
 }
