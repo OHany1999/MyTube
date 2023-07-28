@@ -32,10 +32,10 @@ class Services{
   }
 
 
-  static Future<VideosModel>getVideosList({required String playlistId})async{
-    Map<String,String> parameters={
+  static Future<VideosModel>getVideosList({required List<String>ids})async{
+    Map<String,dynamic> parameters={
       'part':'snippet',
-      'playlistId':playlistId,
+      'id':ids,
       'access_token':APIKEY,
       'key':APIKEY,
     };
@@ -46,13 +46,15 @@ class Services{
 
     Uri uri = Uri.https(
         BaseUrl,
-        '/youtube/v3/playlistItems',
+        '/youtube/v3/videos',
         parameters
     );
     Response response = await http.get(uri,headers: headers);
     var json=jsonDecode(response.body);
     VideosModel videosModel = VideosModel.fromJson(json);
-    print(videosModel.videos.length);
     return videosModel;
   }
+
+
+
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344195602883",
+    "project_id": "mytube-dc195",
+    "storage_bucket": "mytube-dc195.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344195602883:android:63a25766a4b21210c04576",
+        "android_client_info": {
+          "package_name": "com.example.mytube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344195602883-qufrhta3pqq121705nktpuvgp0hj5poc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeorK_Ne3_Fb3DOS7YrWA3dMDRJfgjJUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344195602883-qufrhta3pqq121705nktpuvgp0hj5poc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

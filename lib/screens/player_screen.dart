@@ -4,8 +4,9 @@ import 'package:mytube/models/video_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PlayerScreen extends StatefulWidget {
-  VideoItem videoItem;
-  PlayerScreen(this.videoItem);
+  Snippet snippet;
+  String videoId;
+  PlayerScreen(this.snippet,this.videoId);
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
 }
@@ -18,7 +19,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     // TODO: implement initState
     isReady = false;
     controller = YoutubePlayerController(
-        initialVideoId: widget.videoItem.snippet.resourceId.videoId,
+        initialVideoId: widget.videoId,
       flags: YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
@@ -45,7 +46,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.videoItem.snippet.title),
+        title: Text(widget.snippet.title),
       ),
       body: Container(
         child: YoutubePlayer(
