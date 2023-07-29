@@ -69,17 +69,20 @@ class _SignInScreenState extends State<SignInScreen> {
 
     YT.Video video1 =  YT.Video.fromJson({
       'snippet':{
-        'title':'Uploaded MyVideo',
+        'title':'Uploaded MyVideo new',
         'description':'snippet',
         'categoryId':'22',
+        "tags": [
+          'snippet'
+        ],
       },
       'status':{
         'privacyStatus':'public',
         'madeForKids':false,
+        "selfDeclaredMadeForKids": false
       },
     }
     );
-
 
 
     var status = await Permission.storage.status;
@@ -130,8 +133,12 @@ class _SignInScreenState extends State<SignInScreen> {
             },
             child: Text('Upload'),
           ),
+          SizedBox(height: 30,),
           if(isComplete)
-            Text('video uploaded success'),
+            Text('video uploaded success',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+          SizedBox(height: 5,),
+          if(isComplete)
+          Icon(Icons.check_box,color: Colors.green,size: 30),
         ],
       );
     else {

@@ -8,14 +8,22 @@ import 'package:mytube/screens/player_screen.dart';
 import 'package:mytube/screens/signin_screen.dart';
 import 'package:mytube/utils/firebase_util.dart';
 import 'package:mytube/utils/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/constants.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   List<String>ids=[
     'fSJXdGLhbBA',
-    '0fHJvZU953M'
+    '0fHJvZU953M',
+    'uu5xAMk2s5M',
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,75 +109,76 @@ class HomeScreen extends StatelessWidget {
                     child: (Text('Somethis went wrong')),
                   );
                 }
-                List<String> videosId = snapshot.data!.docs.map((e) => e.data().videoId).toList();
-                return FutureBuilder<VideosModel>(
-                  future: Services.getVideosList(ids: videosId),
-                  builder: (context, snapshotForVideoList) {
-                    if (snapshotForVideoList.connectionState ==
-                        ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    if (snapshotForVideoList.hasError) {
-                      print('err:${snapshotForVideoList.error}');
-                      return Center(
-                        child: Column(
-                          children: [
-                            Text('Something went wrong'),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text('Try Again'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: snapshotForVideoList.data!.items.length,
-                        separatorBuilder: (context, index) => Container(
-                          height: 1,
-                          width: 1,
-                          color: Colors.grey,
-                        ),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PlayerScreen(
-                                            snapshotForVideoList
-                                                .data!.items[index].snippet,ids[index])));
-                              },
-                              child: Row(
-                                children: [
-                                  CachedNetworkImage(
-                                    imageUrl: snapshotForVideoList.data!.items[index]
-                                        .snippet.thumbnails.thumbnailsDefault.url,
-                                    height: 100,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      snapshotForVideoList
-                                          .data!.items[index].snippet.title,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                          fontSize: 18, fontWeight: FontWeight.w500),
+                else{
+                  List<String> videosId = snapshot.data!.docs.map((e) => e.data().videoId).toList();
+                  print('dsdsd:${videosId}');
+                  return FutureBuilder<VideosModel>(
+                    future: Services.getVideosList(ids: videosId),
+                    builder: (context, snapshotForVideoList) {
+                      if (snapshotForVideoList.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshotForVideoList.hasError) {
+                        print('err:${snapshotForVideoList.error}');
+                        return Center(
+                          child: Column(
+                            children: [
+                              Text('Something went wrong'),
+                            ],
+                          ),
+                        );
+                      }
+                      return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: snapshotForVideoList.data!.items.length,
+                          separatorBuilder: (context, index) => Container(
+                            height: 1,
+                            width: 1,
+                            color: Colors.grey,
+                          ),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: EdgeInsets.all(10.0),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PlayerScreen(
+                                              snapshotForVideoList
+                                                  .data!.items[index].snippet,ids[index])));
+                                },
+                                child: Row(
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl: snapshotForVideoList.data!.items[index]
+                                          .snippet.thumbnails.thumbnailsDefault.url,
+                                      height: 100,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        snapshotForVideoList
+                                            .data!.items[index].snippet.title,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        style: TextStyle(
+                                            fontSize: 18, fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        });
-                  },
-                );
+                            );
+                          });
+                    },
+                  );
+
+                }
+
               },
           ),
         ],
