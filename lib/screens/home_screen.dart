@@ -5,7 +5,7 @@ import 'package:mytube/models/channel_info.dart';
 import 'package:mytube/models/firebase_model.dart';
 import 'package:mytube/models/video_model.dart';
 import 'package:mytube/screens/player_screen.dart';
-import 'package:mytube/screens/signin_screen.dart';
+import 'package:mytube/screens/upload_video.dart';
 import 'package:mytube/utils/firebase_util.dart';
 import 'package:mytube/utils/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -129,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       }
+                      print('video:${snapshotForVideoList.data!.items.length}');
                       return ListView.separated(
                           shrinkWrap: true,
                           itemCount: snapshotForVideoList.data!.items.length,
@@ -147,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       MaterialPageRoute(
                                           builder: (context) => PlayerScreen(
                                               snapshotForVideoList
-                                                  .data!.items[index].snippet,ids[index])));
+                                                  .data!.items[index].snippet,videosId[index]),),);
                                 },
                                 child: Row(
                                   children: [
